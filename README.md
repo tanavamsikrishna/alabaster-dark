@@ -2,7 +2,11 @@
 
 A Neovim colorscheme with a minimal amount of highlighting. Port of
 [vscode-theme-alabaster-dark](https://github.com/liangpengyv/vscode-theme-alabaster-dark),
-which follows [Tonksy’s syntax highlighting notes](https://tonsky.me/blog/syntax-highlighting/).
+which follows
+[Tonksy’s syntax highlighting notes](https://tonsky.me/blog/syntax-highlighting/).
+
+This theme as it is right now is custom built for my needs and thus assumes some
+custom setting elsewhere.
 
 Most schemes color everything they can. This one colors four classes:
 
@@ -17,9 +21,9 @@ Punctuation is dimmed. There are no italics or bold on syntax.
 Closest parity with the VSCode theme needs Treesitter highlighting and LSP
 semantic tokens. Regex syntax is a fallback.
 
-Rainbow bracket coloring is not part of this scheme. Use
 [rainbow-delimiters.nvim](https://github.com/HiPhish/rainbow-delimiters.nvim)
-if you want that.
+uses `RainbowDelimiter1`–`5` (nesting levels, not hue names). Point the plugin
+at those groups.
 
 Requires Neovim 0.10+.
 

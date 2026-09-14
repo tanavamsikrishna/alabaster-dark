@@ -4,7 +4,8 @@
 --- plus editor UI and terminal ANSI from the VSCode JSON. Departures: editor/panel
 --- are darkened so the field is inky, not lifted gray; strings use a matte sage
 --- instead of the JSON lime. Dark only. Load via `:colorscheme alabaster-dark`.
---- Does not implement rainbow delimiters.
+--- Defines `RainbowDelimiter1`–`5` (nesting levels, not hue names) for
+--- rainbow-delimiters.nvim.
 
 local M = {}
 
@@ -258,6 +259,15 @@ local function highlights(p)
     healthSuccess = { fg = p.green },
     healthWarning = { fg = p.yellow },
     healthError = { fg = p.red },
+
+    -- rainbow-delimiters.nvim: five hues interleaved so consecutive levels
+    -- contrast more than every-2nd. Omits the extra yellow/orange and cyan
+    -- (too close to bright yellow and blue). Red is not outermost (comments).
+    RainbowDelimiter1 = { fg = p.bright_yellow },
+    RainbowDelimiter2 = { fg = p.blue },
+    RainbowDelimiter3 = { fg = p.red },
+    RainbowDelimiter4 = { fg = p.green },
+    RainbowDelimiter5 = { fg = p.magenta },
   }
 
   -- Treesitter: definitions blue; calls/uses/keywords stay foreground.
