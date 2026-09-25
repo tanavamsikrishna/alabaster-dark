@@ -32,14 +32,15 @@ local function blend(fg, bg)
   )
 end
 
--- VSCode JSON editor was #21252B (L* ~14.5). #15181C keeps the same cool hue.
-local BG = "#15181C"
+-- VSCode JSON editor was #21252B (L* ~14.5). #191C20 is the same cool hue,
+-- darker than that gray but not as inky as #15181C.
+local BG = "#191C20"
 
 local function palette()
   local p = {
     bg = BG,
     fg = "#ABB2BF",
-    panel = "#0F1114",
+    panel = "#131518",
     cursor = "#A9B2C3",
     linenr = "#5F6672",
     comment = "#E06C75",
@@ -77,7 +78,9 @@ local function palette()
       "#D4D7D9",
     },
   }
-  p.cursorline = blend("#A9B2C31A", p.bg)
+  -- JSON uses #A9B2C31A (~10%). Too faint for Visual and reference highlights;
+  -- same hue at 40 (~25%), the alpha already used for search.
+  p.cursorline = blend("#A9B2C340", p.bg)
   p.search = blend("#D19A6640", p.bg)
   p.cursearch = blend("#d19a6680", p.bg)
   p.invalid_bg = blend("#C62D4233", p.bg)
