@@ -10,13 +10,13 @@
 local M = {}
 
 local function hex_rgb(hex)
-  hex = hex:gsub("^#", "")
+  hex = hex:gsub('^#', '')
   return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5, 6), 16)
 end
 
 --- Blend `#RRGGBB` or `#RRGGBBAA` onto an opaque `#RRGGBB` background.
 local function blend(fg, bg)
-  local hex = fg:gsub("^#", "")
+  local hex = fg:gsub('^#', '')
   local alpha = 1
   if #hex == 8 then
     alpha = tonumber(hex:sub(7, 8), 16) / 255
@@ -25,7 +25,7 @@ local function blend(fg, bg)
   local r1, g1, b1 = hex_rgb(hex)
   local r2, g2, b2 = hex_rgb(bg)
   return string.format(
-    "#%02X%02X%02X",
+    '#%02X%02X%02X',
     math.floor(r1 * alpha + r2 * (1 - alpha) + 0.5),
     math.floor(g1 * alpha + g2 * (1 - alpha) + 0.5),
     math.floor(b1 * alpha + b2 * (1 - alpha) + 0.5)
@@ -34,64 +34,64 @@ end
 
 -- VSCode JSON editor was #21252B (L* ~14.5). #191C20 is the same cool hue,
 -- darker than that gray but not as inky as #15181C.
-local BG = "#191C20"
+local BG = '#191C20'
 
 local function palette()
   local p = {
     bg = BG,
-    fg = "#ABB2BF",
-    panel = "#131518",
-    cursor = "#A9B2C3",
-    linenr = "#5F6672",
-    comment = "#E06C75",
-    string = "#89A375",
-    constant = "#BF79C3",
-    definition = "#61AFEF",
-    punct = "#737C8C",
-    invalid_fg = "#DF334A",
-    tab_active = "#D4D7D9",
-    diff_fg = "#D2D6DB",
-    yellow = "#D19A66",
-    cyan = "#56B6C2",
-    green = "#89A375",
-    red = "#E06C75",
-    blue = "#61AFEF",
-    magenta = "#B57EDC",
-    bright_yellow = "#E5C07B",
-    bright_red = "#E34234",
+    fg = '#ABB2BF',
+    panel = '#131518',
+    cursor = '#A9B2C3',
+    linenr = '#5F6672',
+    comment = '#E06C75',
+    string = '#89A375',
+    constant = '#BF79C3',
+    definition = '#61AFEF',
+    punct = '#737C8C',
+    invalid_fg = '#DF334A',
+    tab_active = '#D4D7D9',
+    diff_fg = '#D2D6DB',
+    yellow = '#D19A66',
+    cyan = '#56B6C2',
+    green = '#89A375',
+    red = '#E06C75',
+    blue = '#61AFEF',
+    magenta = '#B57EDC',
+    bright_yellow = '#E5C07B',
+    bright_red = '#E34234',
     ansi = {
       BG,
-      "#E06C75",
-      "#98C379",
-      "#D19A66",
-      "#61AFEF",
-      "#B57EDC",
-      "#56B6C2",
-      "#A9B2C3",
-      "#5F6672",
-      "#E34234",
-      "#66FF00",
-      "#E5C07B",
-      "#007FFF",
-      "#8B00FF",
-      "#08E8DE",
-      "#D4D7D9",
+      '#E06C75',
+      '#98C379',
+      '#D19A66',
+      '#61AFEF',
+      '#B57EDC',
+      '#56B6C2',
+      '#A9B2C3',
+      '#5F6672',
+      '#E34234',
+      '#66FF00',
+      '#E5C07B',
+      '#007FFF',
+      '#8B00FF',
+      '#08E8DE',
+      '#D4D7D9',
     },
   }
   -- JSON uses #A9B2C31A (~10%). Too faint for Visual and reference highlights;
   -- same hue at 40 (~25%), the alpha already used for search.
-  p.cursorline = blend("#A9B2C340", p.bg)
-  p.search = blend("#D19A6640", p.bg)
-  p.cursearch = blend("#d19a6680", p.bg)
-  p.invalid_bg = blend("#C62D4233", p.bg)
-  p.diff_add = blend("#56B6C233", p.bg)
-  p.diff_delete = blend("#E06C7533", p.bg)
-  p.diff_change = blend("#61AFEF33", p.bg)
-  p.diag_error_bg = blend("#E06C7533", p.bg)
-  p.diag_warn_bg = blend("#D19A6633", p.bg)
-  p.diag_info_bg = blend("#61AFEF33", p.bg)
-  p.diag_hint_bg = blend("#56B6C233", p.bg)
-  p.diag_ok_bg = blend(p.green .. "33", p.bg)
+  p.cursorline = blend('#A9B2C340', p.bg)
+  p.search = blend('#D19A6640', p.bg)
+  p.cursearch = blend('#d19a6680', p.bg)
+  p.invalid_bg = blend('#C62D4233', p.bg)
+  p.diff_add = blend('#56B6C233', p.bg)
+  p.diff_delete = blend('#E06C7533', p.bg)
+  p.diff_change = blend('#61AFEF33', p.bg)
+  p.diag_error_bg = blend('#E06C7533', p.bg)
+  p.diag_warn_bg = blend('#D19A6633', p.bg)
+  p.diag_info_bg = blend('#61AFEF33', p.bg)
+  p.diag_hint_bg = blend('#56B6C233', p.bg)
+  p.diag_ok_bg = blend(p.green .. '33', p.bg)
   return p
 end
 
@@ -120,7 +120,7 @@ local function highlights(p)
     FloatBorder = { fg = p.linenr, bg = p.panel },
     FloatTitle = { fg = p.definition, bg = p.panel },
     FloatFooter = { fg = p.linenr, bg = p.panel },
-    ColorColumn = { bg = p.cursorline },
+    ColorColumn = { bg = p.panel },
     Conceal = { fg = p.linenr },
     Cursor = { fg = p.bg, bg = p.cursor },
     lCursor = { fg = p.bg, bg = p.cursor },
@@ -275,178 +275,176 @@ local function highlights(p)
 
   -- Treesitter: definitions blue; calls/uses/keywords stay foreground.
   local ts = {
-    ["@variable"] = text,
-    ["@variable.builtin"] = text,
-    ["@variable.parameter"] = text,
-    ["@variable.parameter.builtin"] = text,
-    ["@variable.member"] = text,
+    ['@variable'] = text,
+    ['@variable.builtin'] = text,
+    ['@variable.parameter'] = text,
+    ['@variable.parameter.builtin'] = text,
+    ['@variable.member'] = text,
 
-    ["@constant"] = const,
-    ["@constant.builtin"] = const,
-    ["@constant.macro"] = const,
+    ['@constant'] = const,
+    ['@constant.builtin'] = const,
+    ['@constant.macro'] = const,
 
-    ["@module"] = text,
-    ["@module.builtin"] = text,
-    ["@label"] = def,
+    ['@module'] = text,
+    ['@module.builtin'] = text,
+    ['@label'] = def,
 
-    ["@string"] = str,
-    ["@string.documentation"] = str,
-    ["@string.regexp"] = str,
-    ["@string.escape"] = punct,
-    ["@string.special"] = str,
-    ["@string.special.symbol"] = str,
-    ["@string.special.url"] = { fg = p.punct, underline = true },
-    ["@string.special.path"] = str,
-    ["@symbol"] = str,
+    ['@string'] = str,
+    ['@string.documentation'] = str,
+    ['@string.regexp'] = str,
+    ['@string.escape'] = punct,
+    ['@string.special'] = str,
+    ['@string.special.symbol'] = str,
+    ['@string.special.url'] = { fg = p.punct, underline = true },
+    ['@string.special.path'] = str,
+    ['@symbol'] = str,
 
-    ["@character"] = const,
-    ["@character.special"] = punct,
-    ["@boolean"] = const,
-    ["@number"] = const,
-    ["@number.float"] = const,
+    ['@character'] = const,
+    ['@character.special'] = punct,
+    ['@boolean'] = const,
+    ['@number'] = const,
+    ['@number.float'] = const,
 
-    ["@type"] = text,
-    ["@type.builtin"] = text,
-    ["@type.definition"] = def,
+    ['@type'] = text,
+    ['@type.builtin'] = text,
+    ['@type.definition'] = def,
 
-    ["@attribute"] = text,
-    ["@attribute.builtin"] = text,
-    ["@property"] = text,
+    ['@attribute'] = text,
+    ['@attribute.builtin'] = text,
+    ['@property'] = text,
 
-    ["@function"] = def,
-    ["@function.builtin"] = text,
-    ["@function.call"] = text,
-    ["@function.macro"] = text,
-    ["@function.method"] = def,
-    ["@function.method.call"] = text,
-    ["@constructor"] = def,
-    ["@operator"] = punct,
+    ['@function'] = def,
+    ['@function.builtin'] = text,
+    ['@function.call'] = text,
+    ['@function.macro'] = text,
+    ['@function.method'] = def,
+    ['@function.method.call'] = text,
+    ['@constructor'] = def,
+    ['@operator'] = punct,
 
-    ["@punctuation.delimiter"] = punct,
-    ["@punctuation.bracket"] = punct,
-    ["@punctuation.special"] = punct,
+    ['@punctuation.delimiter'] = punct,
+    ['@punctuation.bracket'] = punct,
+    ['@punctuation.special'] = punct,
 
-    ["@comment"] = comm,
-    ["@comment.documentation"] = comm,
-    ["@comment.error"] = comm,
-    ["@comment.warning"] = comm,
-    ["@comment.todo"] = comm,
-    ["@comment.note"] = comm,
+    ['@comment'] = comm,
+    ['@comment.documentation'] = comm,
+    ['@comment.error'] = comm,
+    ['@comment.warning'] = comm,
+    ['@comment.todo'] = comm,
+    ['@comment.note'] = comm,
 
-    ["@markup.strong"] = { fg = p.fg, bold = true },
-    ["@markup.italic"] = { fg = p.fg, italic = true },
-    ["@markup.strikethrough"] = { fg = p.fg, strikethrough = true },
-    ["@markup.underline"] = { fg = p.fg, underline = true },
-    ["@markup.heading"] = def,
-    ["@markup.quote"] = { fg = p.punct },
-    ["@markup.math"] = const,
-    ["@markup.link"] = { fg = p.definition, underline = true },
-    ["@markup.link.label"] = { fg = p.definition, underline = true },
-    ["@markup.link.url"] = { fg = p.punct, underline = true },
-    ["@markup.raw"] = str,
-    ["@markup.raw.block"] = str,
-    ["@markup.list"] = punct,
-    ["@markup.list.checked"] = { fg = p.green },
-    ["@markup.list.unchecked"] = punct,
+    ['@markup.strong'] = { fg = p.fg, bold = true },
+    ['@markup.italic'] = { fg = p.fg, italic = true },
+    ['@markup.strikethrough'] = { fg = p.fg, strikethrough = true },
+    ['@markup.underline'] = { fg = p.fg, underline = true },
+    ['@markup.heading'] = def,
+    ['@markup.quote'] = { fg = p.punct },
+    ['@markup.math'] = const,
+    ['@markup.link'] = { fg = p.definition, underline = true },
+    ['@markup.link.label'] = { fg = p.definition, underline = true },
+    ['@markup.link.url'] = { fg = p.punct, underline = true },
+    ['@markup.raw'] = str,
+    ['@markup.raw.block'] = str,
+    ['@markup.list'] = punct,
+    ['@markup.list.checked'] = { fg = p.green },
+    ['@markup.list.unchecked'] = punct,
 
-    ["@diff.plus"] = { fg = p.green },
-    ["@diff.minus"] = { fg = p.red },
-    ["@diff.delta"] = { fg = p.yellow },
+    ['@diff.plus'] = { fg = p.green },
+    ['@diff.minus'] = { fg = p.red },
+    ['@diff.delta'] = { fg = p.yellow },
 
-    ["@tag"] = def,
-    ["@tag.builtin"] = def,
-    ["@tag.attribute"] = text,
-    ["@tag.delimiter"] = punct,
+    ['@tag'] = def,
+    ['@tag.builtin'] = def,
+    ['@tag.attribute'] = text,
+    ['@tag.delimiter'] = punct,
   }
   for name, spec in pairs(ts) do
     groups[name] = spec
   end
 
-  for _, kw in ipairs({
-    "@keyword",
-    "@keyword.coroutine",
-    "@keyword.function",
-    "@keyword.operator",
-    "@keyword.import",
-    "@keyword.type",
-    "@keyword.modifier",
-    "@keyword.repeat",
-    "@keyword.return",
-    "@keyword.debug",
-    "@keyword.exception",
-    "@keyword.conditional",
-    "@keyword.conditional.ternary",
-    "@keyword.directive",
-    "@keyword.directive.define",
-  }) do
+  for _, kw in ipairs {
+    '@keyword',
+    '@keyword.coroutine',
+    '@keyword.function',
+    '@keyword.operator',
+    '@keyword.import',
+    '@keyword.type',
+    '@keyword.modifier',
+    '@keyword.repeat',
+    '@keyword.return',
+    '@keyword.debug',
+    '@keyword.exception',
+    '@keyword.conditional',
+    '@keyword.conditional.ternary',
+    '@keyword.directive',
+    '@keyword.directive.define',
+  } do
     groups[kw] = text
   end
 
   -- LSP: uses stay foreground; declaration/definition of named entities are blue.
   local lsp_type = {
-    ["@lsp.type.class"] = text,
-    ["@lsp.type.comment"] = comm,
-    ["@lsp.type.decorator"] = text,
-    ["@lsp.type.enum"] = text,
-    ["@lsp.type.enumMember"] = const,
-    ["@lsp.type.event"] = text,
-    ["@lsp.type.function"] = text,
-    ["@lsp.type.interface"] = text,
-    ["@lsp.type.keyword"] = text,
-    ["@lsp.type.macro"] = text,
-    ["@lsp.type.method"] = text,
-    ["@lsp.type.modifier"] = text,
-    ["@lsp.type.namespace"] = text,
-    ["@lsp.type.number"] = const,
-    ["@lsp.type.operator"] = punct,
-    ["@lsp.type.parameter"] = text,
-    ["@lsp.type.property"] = text,
-    ["@lsp.type.regexp"] = str,
-    ["@lsp.type.string"] = str,
-    ["@lsp.type.struct"] = text,
-    ["@lsp.type.type"] = text,
-    ["@lsp.type.typeParameter"] = text,
-    ["@lsp.type.variable"] = text,
-    ["@lsp.mod.deprecated"] = { strikethrough = true },
+    ['@lsp.type.class'] = text,
+    ['@lsp.type.comment'] = comm,
+    ['@lsp.type.decorator'] = text,
+    ['@lsp.type.enum'] = text,
+    ['@lsp.type.enumMember'] = const,
+    ['@lsp.type.event'] = text,
+    ['@lsp.type.function'] = text,
+    ['@lsp.type.interface'] = text,
+    ['@lsp.type.keyword'] = text,
+    ['@lsp.type.macro'] = text,
+    ['@lsp.type.method'] = text,
+    ['@lsp.type.modifier'] = text,
+    ['@lsp.type.namespace'] = text,
+    ['@lsp.type.number'] = const,
+    ['@lsp.type.operator'] = punct,
+    ['@lsp.type.parameter'] = text,
+    ['@lsp.type.property'] = text,
+    ['@lsp.type.regexp'] = str,
+    ['@lsp.type.string'] = str,
+    ['@lsp.type.struct'] = text,
+    ['@lsp.type.type'] = text,
+    ['@lsp.type.typeParameter'] = text,
+    ['@lsp.type.variable'] = text,
+    ['@lsp.mod.deprecated'] = { strikethrough = true },
   }
   for name, spec in pairs(lsp_type) do
     groups[name] = spec
   end
 
-  for _, kind in ipairs({
-    "function",
-    "method",
-    "class",
-    "struct",
-    "enum",
-    "type",
-    "interface",
-    "namespace",
-    "macro",
-    "decorator",
-  }) do
-    groups["@lsp.typemod." .. kind .. ".declaration"] = def
-    groups["@lsp.typemod." .. kind .. ".definition"] = def
+  for _, kind in ipairs {
+    'function',
+    'method',
+    'class',
+    'struct',
+    'enum',
+    'type',
+    'interface',
+    'namespace',
+    'macro',
+    'decorator',
+  } do
+    groups['@lsp.typemod.' .. kind .. '.declaration'] = def
+    groups['@lsp.typemod.' .. kind .. '.definition'] = def
   end
 
   return groups
 end
 
 function M.load()
-  vim.cmd("highlight clear")
-  if vim.fn.exists("syntax_on") == 1 then
-    vim.cmd("syntax reset")
-  end
+  vim.cmd 'highlight clear'
+  if vim.fn.exists 'syntax_on' == 1 then vim.cmd 'syntax reset' end
 
   vim.o.termguicolors = true
-  vim.o.background = "dark"
-  vim.g.colors_name = "alabaster-dark"
+  vim.o.background = 'dark'
+  vim.g.colors_name = 'alabaster-dark'
 
   local p = palette()
   M.palette = p
 
   for i, color in ipairs(p.ansi) do
-    vim.g["terminal_color_" .. (i - 1)] = color
+    vim.g['terminal_color_' .. (i - 1)] = color
   end
 
   apply(highlights(p))
